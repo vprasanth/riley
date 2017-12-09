@@ -1,0 +1,54 @@
+<!DOCTYPE>
+<html>
+<head>
+	<title>Riley -- logs</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript">
+		(function(){
+			document.addEventListener('DOMContentLoaded', () => {
+				fetch('/api/poops').then(r => {
+					if(r.status !== 200) return;
+
+					r.json().then(data => {
+						const tBody = document.getElementById('data');
+						data.forEach(d => {
+							let tr = document.createElement('tr');
+
+							let date = document.createElement('td');
+							date.innerHTML = Date(parseInt(date));
+
+							let packLeader = document.createElement('td');
+							packLeader.innerHTML = d.packLeader;
+
+							let poop = document.createElement('td');
+							poop.innerHTML = d.poop;
+
+							let pee = document.createElement('td');
+							pee.innerHTML = d.pee;
+
+							tr.appendChild(date);
+							tr.appendChild(packLeader);
+							tr.appendChild(poop);
+							tr.appendChild(pee);
+
+							tBody.appendChild(tr);
+						});
+					});
+				});
+			})
+		})();
+	</script>
+</head>
+<body>
+	<h1>Riley poop logs</h1>
+	<table>
+		<tr>
+			<th>Date</th>
+			<th>Pack Leader</th>
+			<th><span class="emoji">💩</span></th>
+			<th><span class="emoji">🏊</span></th>
+		</tr>
+		<tbody id="data"></tbody>
+	</table>
+</body>
+</html>

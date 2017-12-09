@@ -6,7 +6,18 @@
 </head>
 <body>
 	<h1>Riley -- Puppy poopy tracker</h1>
+	<a href="/logs.html">Logs</a>
 	<form action="/api/poop" method="post">
+		<div>
+			<label for="packleader">Pack Leader</label>
+			<select name="packleader" id="packleader">
+				<option value="ajan">Ak47</option>
+				<option value="bigdaddy">Bigdaddy</option>
+				<option value="tdawg">Tdawg</option>
+				<option value="rebs">Rebs</option>
+				<option value="poops">Poops</option>
+			</select>
+		</div>
 		<div>
 			<label for="poop">Pooped <span class="emoji">💩</span></label>
 			<input type="checkbox" id="poop" name="poop">

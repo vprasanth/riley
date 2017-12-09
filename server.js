@@ -16,14 +16,15 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.post('/api/poop', (req, res) => {
 	const poopData = {
-		poop: req.body.poop === "on" ? true : false,
-		pee: req.body.pee === "on" ? true : false,
+		poop: req.body.poop == 'on' ? 'yes' : 'no',
+		pee: req.body.pee == 'on' ? 'yes' : 'no',
+		packLeader: req.body.packleader,
 		date: Date.now().toString()
 	};
 
 	insert(colName, poopData)
 	.then(r => {
-		res.send(r);
+		res.redirect('/logs.html');
 	})
 	.catch(e => {
 		console.log(e);
