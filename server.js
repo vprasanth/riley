@@ -1,5 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const basicAuth = require('express-basic-auth');
+const cookieParser = require('cookie-parser');
 const MongoClient = require('mongodb');
 const app = express();
 
@@ -8,18 +10,29 @@ let db;
 const colName = 'poops';
 connect();
 
+// shitty auth
+app.use(cookieParser('b74c1789-c2b3-49c5-9195-f25c96ab3094'));
+app.use(myMiddleware);
+app.use(basicAuth({
+	challenge: true,
+	realm: 'poopapp',
+	users:{'admin': 'birddog47'}
+}));
+
 // static confis
 app.use(express.static('public'));
+app.use(express.static('node_modules'));
 
 // configure middleware
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.post('/api/poop', (req, res) => {
+	console.log(req.body);
 	const poopData = {
-		poop: req.body.poop == 'on' ? 'yes' : 'no',
-		pee: req.body.pee == 'on' ? 'yes' : 'no',
+		did: processDid(req.body.did),
 		packLeader: req.body.packleader,
-		date: Date.now().toString()
+		date: new Date(),
+		location: {lat: req.body.lat, long: req.body.long}
 	};
 
 	insert(colName, poopData)
@@ -30,10 +43,32 @@ app.post('/api/poop', (req, res) => {
 		console.log(e);
 		res.send('somthing bad happenz');
 	});
+
 });
 
+function myMiddleware(req, res, next) {
+	console.log('comming through!');
+	if (!req.signedCookies.user) {
+		res.cookie('user', 'admin', {signed: true});
+		res.cookie('password', 'birddog47', {signed: true});
+	}
+	next();
+}
+
+function processDid(did) {
+	if (did === 'both') {
+		return { poop: 'yes', pee: 'yes'};
+	} else if (did === 'pee') {
+		return { poop: 'no', pee: 'yes'};
+	} else if (did === 'poo') {
+		return { poop: 'yes', pee: 'no'};
+	} else {
+		return { poop: 'no', pee: 'no'};
+	}
+}
+
 app.get('/api/poops', (req, res) => {
-	getAllFrom(colName)
+	getAllFrom(colName, [['date', 'descending']])
 	.then(r => {
 		res.send(r);
 	})
@@ -70,10 +105,10 @@ async function connect() {
   	}
   }
 
-  async function getAllFrom(collection) {
+  async function getAllFrom(collection, sort) {
   	try {
   		console.log(`getting all docs from ${collection}`);
-  		let allDocs = await db.collection(collection).find().toArray();
+  		let allDocs = await db.collection(collection).find({}, {sort: sort}).toArray();
   		console.log(`got`, allDocs);
   		return allDocs;
   	} catch (e) {
@@ -81,3 +116,4 @@ async function connect() {
   		return e;
   	}
   }
+
