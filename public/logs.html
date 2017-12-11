@@ -1,54 +1,88 @@
-<!DOCTYPE>
+<!doctype html>
 <html>
 <head>
-	<title>Riley -- logs</title>
+	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script type="text/javascript">
-		(function(){
-			document.addEventListener('DOMContentLoaded', () => {
-				fetch('/api/poops').then(r => {
-					if(r.status !== 200) return;
-
-					r.json().then(data => {
-						const tBody = document.getElementById('data');
-						data.forEach(d => {
-							let tr = document.createElement('tr');
-
-							let date = document.createElement('td');
-							date.innerHTML = Date(parseInt(date));
-
-							let packLeader = document.createElement('td');
-							packLeader.innerHTML = d.packLeader;
-
-							let poop = document.createElement('td');
-							poop.innerHTML = d.poop;
-
-							let pee = document.createElement('td');
-							pee.innerHTML = d.pee;
-
-							tr.appendChild(date);
-							tr.appendChild(packLeader);
-							tr.appendChild(poop);
-							tr.appendChild(pee);
-
-							tBody.appendChild(tr);
-						});
-					});
-				});
-			})
-		})();
-	</script>
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<title>Riley -- logs</title>
+	<style type="text/css">
+		.tan {
+			background-color: tan;
+		}
+	</style>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	<script type="text/javascript" src="js/logs.js"></script>
 </head>
 <body>
-	<h1>Riley poop logs</h1>
-	<table>
-		<tr>
-			<th>Date</th>
-			<th>Pack Leader</th>
-			<th><span class="emoji">💩</span></th>
-			<th><span class="emoji">🏊</span></th>
-		</tr>
-		<tbody id="data"></tbody>
-	</table>
+	<nav class="navbar navbar-expand-lg navbar-light fixed-top tan">
+		<a class="navbar-brand" href="/">Riley</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" href="/">Track</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href="logs.html">Logs <span class="sr-only">(current)</span></a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div class="container-fluid mt-5">
+		<div class="row">
+			<div class="col">
+				<h2 class="mt-5">Summary</h2>
+				<p id="summary">
+					Loading summary...
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<h2>Stats</h2>
+					<ul class="list-group">
+					  <li class="list-group-item d-flex justify-content-between align-items-center">
+					    Total poops today
+					    <span id="totalpoopstoday" class="badge text-white bg-dark badge-pill">0</span>
+					  </li>
+					  <li class="list-group-item d-flex justify-content-between align-items-center">
+					    Total poops yesterday
+					    <span id="totalpoopsyesterday" class="badge text-white bg-dark badge-pill">0</span>
+					  </li>
+					  <li class="list-group-item d-flex justify-content-between align-items-center">
+					    Total peeps today
+					    <span id="totalpeepstoday" class="badge text-white bg-dark badge-pill">0</span>
+					  </li>
+					  <li class="list-group-item d-flex justify-content-between align-items-center">
+					    Total peeps yesterday
+					    <span id="totalpeepsyesterday" class="badge text-white bg-dark badge-pill">0</span>
+					  </li>
+					</ul>
+			</div>
+		</div>
+		<div class="row mt-3">
+			<div class="col">
+				<h2>History</h2>
+				<table class="table table-striped text-uppercase">
+					<thead class="thead-dark">
+					<tr>
+						<th>Date</th>
+						<th>Pack Leader</th>
+						<th><span class="emoji">💩</span></th>
+						<th><span class="emoji">🏊</span></th>
+						<th>Remove</th>
+					</tr>
+					</thead>
+					<tbody id="data"></tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 </body>
 </html>

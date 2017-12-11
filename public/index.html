@@ -1,35 +1,82 @@
-<!DOCTYPE>
+<!doctype html>
 <html>
-<head>
-	<title>Riley</title>
+<head lang="en">
+	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<title>Riley</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 </head>
 <body>
-	<h1>Riley -- Puppy poopy tracker</h1>
-	<a href="/logs.html">Logs</a>
-	<form action="/api/poop" method="post">
-		<div>
-			<label for="packleader">Pack Leader</label>
-			<select name="packleader" id="packleader">
-				<option value="ajan">Ak47</option>
-				<option value="bigdaddy">Bigdaddy</option>
-				<option value="tdawg">Tdawg</option>
-				<option value="rebs">Rebs</option>
-				<option value="poops">Poops</option>
-			</select>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+		<a class="navbar-brand" href="/">Riley</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav">
+				<li class="nav-item active">
+					<a class="nav-link" href="/">Track <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="logs.html">Logs</a>
+				</li>
+			</ul>
 		</div>
-		<div>
-			<label for="poop">Pooped <span class="emoji">💩</span></label>
-			<input type="checkbox" id="poop" name="poop">
+	</nav>
+	<div class="jumbotron jumbotron-fluid mt-5">
+		<div class="container">
+			<h1 class="display-3">	🐶 Puppy poopy tracker</h1>
+			<p class="lead">Never lose track of 💩</p>
 		</div>
-		<div>
-			<label for="pee">Pee'ed <span class="emoji">🏊</span></label>
-			<input type="checkbox" id="pee" name="pee">
-		</div>
-		<div class="button">
-			<button type="reset">Reset</button>
-			<button type="submit">Submit</button>
-		</div>
-	</form>
+	</div>
+	<div class="container-fluid">
+		<form action="/api/poop" method="post">
+			<div class="form-row">
+				<div class="col">
+					<div class="form-group">
+						<label for="packleader">Pack Leader</label>
+						<select class="form-control form-control-lg text-uppercase" name="packleader" id="packleader">
+							<option value="ajan">Ak47</option>
+							<option value="bigdaddy">Bigdaddy</option>
+							<option value="tdawg">Tdawg</option>
+							<option value="rebs">Rebs</option>
+							<option value="poops">Himashdawg</option>
+							<option value="poops">Poops</option>
+							<option value="poops">Riley</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<div class="col">
+						<div class="btn-group btn-group-lg" data-toggle="buttons">
+							<label class="btn btn-outline-dark active">
+								<input type="radio" name="options" id="poop" autocomplete="off" checked>Poop 💩
+							</label>
+							<label class="btn btn-outline-dark">
+								<input type="radio" name="options" id="pee" autocomplete="off">Pee 🏊
+							</label>
+							<label class="btn btn-outline-dark">
+								<input type="radio" name="options" id="both" autocomplete="off">Both 💩🏊
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<div class="col">
+						<button type="submit" class="btn btn-primary btn-lg btn-block" style="">Submit</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 </body>
 </html>
