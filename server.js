@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const basicAuth = require('express-basic-auth');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
+const helmet = require('helmet');
 const MongoClient = require('mongodb');
 const app = express();
 
@@ -11,6 +13,7 @@ const colName = 'poops';
 connect();
 
 // shitty auth
+app.use(helmet());
 app.use(cookieParser('b74c1789-c2b3-49c5-9195-f25c96ab3094'));
 app.use(myMiddleware);
 app.use(basicAuth({
@@ -20,6 +23,7 @@ app.use(basicAuth({
 }));
 
 // static confis
+app.use(compression());
 app.use(express.static('public'));
 app.use(express.static('node_modules'));
 
