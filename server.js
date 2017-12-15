@@ -38,7 +38,8 @@ app.post('/api/poop', (req, res) => {
 	if (!date || !time) {
 		now = new Date();
 	} else {
-		now = new Date(date.substring(0,4), +date.substring(5,7)-1, date.substring(8,10), time.substring(0,2), time.substring(3,5))
+		now = new Date(Date.UTC(date.substring(0,4), +date.substring(5,7)-1, date.substring(8,10), time.substring(0,2), time.substring(3,5)));
+		console.log(now.toString());
 	}
 	// console.log(req.body, date.substring(0,4), +date.substring(5,7)-1, date.substring(8,10), time.substring(0,2), time.substring(3,5));
 
