@@ -89,8 +89,8 @@ app.delete('/api/poop/:id', (req, res) => {
 function myMiddleware(req, res, next) {
 	console.log('comming through!');
 	if (!req.signedCookies.user) {
-		res.cookie('user', 'admin', {signed: true});
-		res.cookie('password', 'birddog47', {signed: true});
+		res.cookie('user', 'admin', {signed: true, secure: true});
+		res.cookie('password', 'birddog47', {signed: true, secure: true});
 	}
 	next();
 }
