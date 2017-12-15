@@ -31,22 +31,22 @@ app.use(express.static('node_modules'));
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.post('/api/poop', (req, res) => {
-	const date = req.body.date;
-	const time = req.body.time;
-	let now;
+	// const date = req.body.date;
+	// const time = req.body.time;
+	// let now;
 
-	if (!date || !time) {
-		now = new Date();
-	} else {
-		now = new Date(Date.UTC(date.substring(0,4), +date.substring(5,7)-1, date.substring(8,10), time.substring(0,2), time.substring(3,5)));
-		console.log(now.toString());
-	}
+	// if (!date || !time) {
+	// 	now = new Date();
+	// } else {
+	// 	now = new Date(Date.UTC(date.substring(0,4), +date.substring(5,7)-1, date.substring(8,10), time.substring(0,2), time.substring(3,5)));
+	// 	console.log(now.toString());
+	// }
 	// console.log(req.body, date.substring(0,4), +date.substring(5,7)-1, date.substring(8,10), time.substring(0,2), time.substring(3,5));
 
 	const poopData = {
 		did: processDid(req.body.did),
 		packLeader: req.body.packleader,
-		date: now,
+		date: new Date(),
 		location: {lat: req.body.lat, long: req.body.long}
 	};
 
