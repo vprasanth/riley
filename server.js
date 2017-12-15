@@ -31,13 +31,25 @@ app.use(express.static('node_modules'));
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.post('/api/poop', (req, res) => {
-	console.log(req.body);
+	const date = req.body.date;
+	const time = req.body.time;
+	let now;
+
+	if (!date || !time) {
+		now = new Date();
+	} else {
+		now = new Date(date.substring(0,4), +date.substring(5,7)-1, date.substring(8,10), time.substring(0,2), time.substring(3,5))
+	}
+	// console.log(req.body, date.substring(0,4), +date.substring(5,7)-1, date.substring(8,10), time.substring(0,2), time.substring(3,5));
+
 	const poopData = {
 		did: processDid(req.body.did),
 		packLeader: req.body.packleader,
-		date: new Date(),
+		date: now,
 		location: {lat: req.body.lat, long: req.body.long}
 	};
+
+	// res.send(poopData);
 
 	insert(colName, poopData)
 	.then(r => {
@@ -48,6 +60,30 @@ app.post('/api/poop', (req, res) => {
 		res.send('somthing bad happenz');
 	});
 
+});
+
+app.get('/api/poops', (req, res) => {
+	getAllFrom(colName, [['date', 'descending']])
+	.then(r => {
+		res.send(r);
+	})
+	.catch(e => {
+		res.status(400).send('there was an errr');
+		console.log(e);
+	})
+});
+
+app.delete('/api/poop/:id', (req, res) => {
+	// console.log(req.params);
+	deleteRecord(colName, req.params.id)
+	.then(r => {
+		console.log('done!');
+		res.status(200).send(`Deleted ${req.params.id}!`);
+	})
+	.catch(e => {
+		res.status(400).send('there was an errr');
+		console.log(e);
+	});
 });
 
 function myMiddleware(req, res, next) {
@@ -70,18 +106,6 @@ function processDid(did) {
 		return { poop: 'no', pee: 'no'};
 	}
 }
-
-app.get('/api/poops', (req, res) => {
-	getAllFrom(colName, [['date', 'descending']])
-	.then(r => {
-		res.send(r);
-	})
-	.catch(e => {
-		res.send('there was an errr');
-		console.log(e);
-	})
-});
-
 
 async function connect() {
 	const url = 'mongodb://localhost:27017/riley';
@@ -115,6 +139,17 @@ async function connect() {
   		let allDocs = await db.collection(collection).find({}, {sort: sort}).toArray();
   		console.log(`got`, allDocs);
   		return allDocs;
+  	} catch (e) {
+  		console.log(e);
+  		return e;
+  	}
+  }
+
+  async function deleteRecord(collection, id) {
+  	try {
+  		console.log(`deleting ${id} from ${collection}`);
+  		let r = await db.collection(collection).deleteOne({_id: new MongoClient.ObjectID(id)});
+  		return r;
   	} catch (e) {
   		console.log(e);
   		return e;
