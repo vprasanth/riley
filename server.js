@@ -111,10 +111,13 @@ function processDid(did) {
 async function connect() {
 	const url = 'mongodb://localhost:27017/riley';
 	const dbName = 'poopytracker';
+	const dbOptions = {
+		reconnectInterval: 10000 // 10 seconds
+	};
 	let client;
 
 	try {
-		client = await MongoClient.connect(url);
+		client = await MongoClient.connect(url, dbOptions);
 		db = client.db(dbName);
   		// start server
   		app.listen(3000, () => console.log('Poopy server running on 3000!'));
