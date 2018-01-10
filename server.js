@@ -109,8 +109,14 @@ function processDid(did) {
 }
 
 async function connect() {
-	const url = 'mongodb://localhost:27017/riley';
-	const dbName = 'poopytracker';
+	if (process.env.POOPDBSERVER) {
+		console.log('using db env settings');
+	} else {
+		console.log('using default');
+	}
+
+	const url = process.env.POOPDBSERVER || 'mongodb://localhost:27017/riley';
+	const dbName = process.env.POOPDBNAME || 'poopytracker';
 	const dbOptions = {
 		reconnectInterval: 10000 // 10 seconds
 	};
